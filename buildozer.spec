@@ -3,7 +3,7 @@
 title = Donkey
 
 package.name = yourapp
-
+source.dir = .
 version = 0.1
 
 description = Donkey Application
