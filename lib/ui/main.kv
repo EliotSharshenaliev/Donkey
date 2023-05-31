@@ -1,0 +1,160 @@
+<MDScreenManager>:
+    LoginScreen:
+    MainScreen:
+
+<LoginScreen>:
+    name: "LoginScreen"
+<MainScreen>:
+    name: "MainScreen"
+    md_bg_color: "#f0f0f0"
+    Screen:
+        MDBoxLayout:
+            id: center_layout
+            orientation: "vertical"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            MDTopAppBar:
+                disabled: True if root.isWorking else False
+                orientation: "vertical"
+                adaptive_height: True
+                size_hint_y: None
+                pos_hint: {"top": 1}
+                md_bg_color: "#696a70"
+                id: toolbar
+                title: "Getting user..."
+                right_action_items: [["logout",lambda x: root.on_logout()]]
+
+            MDProgressBar:
+                id: spinner
+                size_hint_y: 0.006
+                pos_hint: {"center_y": .6}
+                type: "indeterminate"
+
+            MDBoxLayout:
+                id: text_input_layout
+                disabled: True if root.isWorking else False
+                orientation: "vertical"
+                adaptive_height: True
+                padding: 40
+                spacing: 40
+                size_hint_y: 0.9
+
+
+                MDCard:
+                    orientation: "vertical"
+                    size_hint_y: 0.3
+                    MDLabel:
+                        adaptive_size: True
+                        text: ""
+                        allow_selection: True
+                        padding: "4dp", "4dp"
+                        halign: "center"
+                        pos_hint_x: 0.5
+                        size_hint_x: 1
+                        size_hint_y: 0.2
+                        font_size: 35
+                        id: DateLabel
+
+                    MDRaisedButton:
+                        text: "Select date"
+                        pos_hint_x: 0.5
+                        size_hint_x: 1
+                        on_release: root.show_date_picker()
+                        font_size: 35
+
+                MDCard:
+                    orientation: "vertical"
+                    size_hint_y: 0.3
+                    MDLabel:
+                        adaptive_size: True
+                        text: ""
+                        allow_selection: True
+                        padding: "4dp", "4dp"
+                        halign: "center"
+                        pos_hint_x: 0.5
+                        size_hint_x: 1
+                        size_hint_y: 0.2
+                        font_size: 35
+                        id: TimeLabel
+
+
+                    MDRaisedButton:
+                        text: "Select time"
+                        pos_hint_x: 0.5
+                        size_hint_x: 1
+                        on_release: root.show_time_picker()
+                        font_size: 35
+
+                MDCard:
+                    orientation: "vertical"
+                    padding: "8dp"
+                    adaptive_height: True
+#                    MDBoxLayout:
+#                        id: captcha_layout
+#                        orientation: "horizontal"
+#                        pos_hint_x: 0.5
+#                        size_hint_x: 1
+#                        size_hint_y: 0.3
+#                        font_size: 35
+#                        spacing: 10
+
+                    FitImage:
+                        id: captchaImage
+                        source: "static/captcha/366aced4-f94b-11ed-85b1-0e6efebce12a.jpg"
+                        size_hint_x: 1
+                        size_hint_y: 0.3
+                        pos_hint: {"center_y": 0.5}
+                        allow_stretch: True
+                        keep_ratio: True
+
+                    MDRaisedButton:
+                        id: reload_captcha_btx
+                        size_hint_x: 1
+                        size_hint_y: 0.2
+                        text: "Reload captcha"
+                        pos_hint: {"center_y": 0.5}
+                        on_release:
+                            root.on_press_reload_captcha(self)
+
+                    MDTextField:
+                        id: CaptchaField
+                        hint_text: "Captcha: "
+                        helper_text: "To start the process, please write the CAPTCHA."
+                        helper_text_mode: "on_error"
+                        pos_hint: {"center_y": 0.5}
+                        size_hint_x: 1
+                        size_hint_y: 0.2
+                        font_size: 35
+
+                MDTextField:
+                    id: UserInformationField
+                    hint_text: "Text: "
+                    helper_text: "To start the process, please enter your information."
+                    helper_text_mode: "on_error"
+                    pos_hint_x: 0.5
+                    size_hint_x: 1
+                    size_hint_y: 0.3
+                    font_size: 35
+
+            MDBoxLayout:
+                id: bottom_layout
+                orientation: "horizontal"
+                padding: 40
+                spacing: 30
+                size_hint_y: 0.1
+                size_hint_x: 1
+                MDRectangleFlatButton:
+                    disabled: True if root.isAttacking else False
+                    size_hint_x: 1
+                    text: "Stop catching" if root.isWorking else "Catch"
+                    pos_hint: {"center_x": 0.5}
+                    on_release:
+                        root.on_click_stop_catch() if root.isWorking else root.on_click_catch()
+                MDRaisedButton:
+                    disabled: False if root.isWorking else True
+                    size_hint_x: 1
+                    text: "Stop attacking" if root.isAttacking else "Attack"
+                    pos_hint: {"center_x": 0.5}
+                    on_release:
+                        root.on_click_stop_attacking() if root.isAttacking else root.on_click_attack()
+
+
